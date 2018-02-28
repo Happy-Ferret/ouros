@@ -14,7 +14,7 @@ lazy_static! {
 }
 
 pub fn init() {
-	
+
     IDT.load();
 }
 
@@ -23,5 +23,3 @@ extern "x86-interrupt" fn breakpoint_handler(stack_frame: &mut ExceptionStackFra
 {
     println!("EXCEPTION: BREAKPOINT\n{:#?}", stack_frame);
 }
-
-
