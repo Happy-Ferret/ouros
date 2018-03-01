@@ -12,6 +12,7 @@ extern crate x86_64 ;
 #[macro_use] 
 extern crate bitflags ; 
 
+extern crate bit_field ; 
 
 extern crate hole_list_allocator;
 extern crate alloc;
@@ -28,6 +29,7 @@ extern crate x86 ;
 pub mod vga_buffer ; 
 pub mod memory ; 
 mod interrupts;
+ 
 
  
 use memory::FrameAllocator ; 
@@ -46,14 +48,23 @@ pub extern "C" fn rust_main(multiboot_information_address: usize) {
     enable_write_protect_bit();
 
     // set up guard page and map the heap pages
-    memory::init(boot_info);
+    let mut memory_controller = memory::init(boot_info);
 
     // initialize our IDT
-    interrupts::init();
+    interrupts::init(&mut memory_controller);
 
     // invoke a breakpoint exception
-    x86_64::instructions::interrupts::int3();
+    // x86_64::instructions::interrupts::int3();
     
+    //////// Invoke a double_fault
+    // unsafe {
+    //     *(0xdeadbeaf as *mut u64) = 42 ; 
+    // }    
+
+    fn stack_overflow(){
+        stack_overflow() ; 
+    }
+    stack_overflow() ; 
 
     println!("It did not crash!");
 

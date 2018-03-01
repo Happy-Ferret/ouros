@@ -10,6 +10,7 @@ use ::memory::PAGE_SIZE ;
 use ::memory::Frame ; 
 use self::temporary_page::TemporaryPage;
 pub use self::mapper::Mapper;
+
 use core::ops::{Deref, DerefMut};
 
 use self::table::{Table, Level4,P4};
@@ -58,6 +59,18 @@ impl Page {
 
 }
 
+use core::ops::Add;
+
+impl Add<usize> for Page {
+    type Output = Page;
+
+    fn add(self, rhs: usize) -> Page {
+        Page { number: self.number + rhs }
+    }
+}
+
+
+#[derive(Clone)]
 pub struct PageIter {
     start: Page,
     end: Page,
