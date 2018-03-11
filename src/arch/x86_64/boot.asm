@@ -14,7 +14,6 @@ start:
     call enable_paging     ; new    
     call set_up_SSE
     lgdt [gdt64.pointer]
-
     jmp gdt64.code:long_mode_start
 
 	; print `OK` to screen

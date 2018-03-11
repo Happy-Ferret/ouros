@@ -42,7 +42,7 @@ impl StackAllocator {
 			return None ; 
 		}
 
-		let range = self.range.clone() ; 
+		let mut range = self.range.clone() ; 
 		let guard_page = range.next() ; 
 		let stack_start = range.next() ; 
 		let stack_end = if size_in_pages==1 {

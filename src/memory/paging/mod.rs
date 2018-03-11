@@ -27,7 +27,7 @@ pub struct Page {
 }
 
 impl Page {
-	fn start_address(&self) -> usize {
+	pub fn start_address(&self) -> usize {
     	self.number * PAGE_SIZE
 	}
 
